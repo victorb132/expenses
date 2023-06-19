@@ -1,3 +1,4 @@
+import 'package:expenses/components/transaction_user.dart';
 import 'package:flutter/material.dart';
 
 main() {
@@ -9,14 +10,14 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
+  MyHomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +26,14 @@ class MyHomePage extends StatelessWidget {
         title: const Text('Despesas Pessoais'),
       ),
       body: const Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Card(
-            child: Text('Gráfico'),
+            color: Colors.blue,
             elevation: 5,
+            child: Text('Gráfico'),
           ),
-          Card(
-            child: Text('Lista de transações'),
-          ),
+          TransactionUser()
         ],
       ),
     );
