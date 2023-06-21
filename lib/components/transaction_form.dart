@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatelessWidget {
+class TransactionForm extends StatefulWidget {
+  final void Function(String, double) onSubmit;
+
+  const TransactionForm(this.onSubmit, {super.key});
+
+  @override
+  State<TransactionForm> createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
   final titleController = TextEditingController();
   final valueController = TextEditingController();
 
-  final void Function(String, double) onSubmit;
+  _submitForm() {
+    final title = titleController.text;
+    final value = double.tryParse(valueController.text) ?? 0.0;
 
-  TransactionForm(this.onSubmit, {super.key});
+    if (title.isEmpty || value <= 0) {
+      return;
+    }
+
+    widget.onSubmit(title, value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +32,15 @@ class TransactionForm extends StatelessWidget {
         children: [
           TextField(
             controller: titleController,
+            onSubmitted: (_) => _submitForm(),
             decoration: const InputDecoration(
               labelText: 'Título',
             ),
           ),
           TextField(
             controller: valueController,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            onSubmitted: (_) => _submitForm(),
             decoration: const InputDecoration(
               labelText: 'Valor (R\$)',
             ),
@@ -31,13 +50,9 @@ class TransactionForm extends StatelessWidget {
             children: [
               TextButton(
                 style: TextButton.styleFrom(
-                  primary: Colors.purple,
+                  foregroundColor: Colors.purple,
                 ),
-                onPressed: () {
-                  final title = titleController.text;
-                  final value = double.tryParse(valueController.text) ?? 0.0;
-                  onSubmit(title, value);
-                },
+                onPressed: _submitForm,
                 child: const Text('Nova Transação'),
               ),
             ],
