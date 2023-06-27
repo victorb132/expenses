@@ -21,8 +21,23 @@ class ExpensesApp extends StatelessWidget {
       home: const MyHomePage(),
       theme: tema.copyWith(
         colorScheme: tema.colorScheme.copyWith(
-          primary: Colors.purple,
+          primary: Colors.amber,
           secondary: Colors.amber,
+        ),
+        textTheme: tema.textTheme.copyWith(
+          titleLarge: const TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontFamily: 'OpenSans',
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
@@ -37,19 +52,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _transactions = [
-    Transaction(
-      id: 't1',
-      title: 'Novo tênis de corrida',
-      value: 310.76,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de luz',
-      value: 211.30,
-      date: DateTime.now(),
-    ),
+  final List<Transaction> _transactions = [
+    // Transaction(
+    //   id: 't1',
+    //   title: 'Novo tênis de corrida',
+    //   value: 310.76,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'Conta de luz',
+    //   value: 211.30,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   _addTransaction(String title, double value) {
@@ -94,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Card(
-            color: Colors.blue,
+            color: Colors.amber,
             elevation: 5,
             child: Text('Gráfico'),
           ),
