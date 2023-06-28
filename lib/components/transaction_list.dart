@@ -4,13 +4,15 @@ import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final void Function(String) onRemove;
 
-  const TransactionList(this.transactions, {super.key});
+  const TransactionList(
+      {super.key, required this.transactions, required this.onRemove});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 300,
+      height: 530,
       child: transactions.isEmpty
           ? Column(
               children: [
@@ -35,44 +37,42 @@ class TransactionList extends StatelessWidget {
                 final tr = transactions[index];
 
                 return Card(
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Theme.of(context).colorScheme.primary,
-                            width: 2,
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(10),
-                        child: Text('R\$  ${tr.value.toStringAsFixed(2)}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Theme.of(context).colorScheme.primary,
-                            )),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            tr.title,
+                  elevation: 5,
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 5,
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: FittedBox(
+                          child: Text(
+                            'R\$${tr.value}',
                             style: const TextStyle(
-                              fontSize: 16,
+                              color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Text(
-                            DateFormat('d MMM y').format(tr.date),
-                            style: const TextStyle(color: Colors.grey),
-                          ),
-                        ],
+                        ),
                       ),
-                    ],
+                    ),
+                    title: Text(
+                      tr.title,
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    subtitle: Text(
+                      DateFormat('d MMM y').format(tr.date),
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete),
+                      color: Theme.of(context).colorScheme.error,
+                      onPressed: () {
+                        onRemove(tr.id);
+                      },
+                    ),
                   ),
                 );
               },
