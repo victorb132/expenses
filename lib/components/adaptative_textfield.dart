@@ -37,7 +37,9 @@ class AdpatativeTextField extends StatelessWidget {
             controller: controller,
             onSubmitted: onSubmitted,
             keyboardType: keyboardType,
-            decoration: InputDecoration(labelText: label),
+            decoration: InputDecoration(
+              labelText: label,
+            ),
           );
   }
 }
